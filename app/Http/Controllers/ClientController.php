@@ -2,30 +2,36 @@
 
 namespace CodeProject\Http\Controllers;
 
-use CodeProject\Entities\Client;
-use CodeProject\Repositories\ClientRepositoryEloquent;
+use CodeProject\Repositories\ClientRepository;
 use Illuminate\Http\Request;
-
-use CodeProject\Http\Requests;
-use CodeProject\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class ClientController extends Controller
 {
+    /*
+     * @var ClientRepository
+     */
+    private $repository;
+
+    public function __construct(ClientRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
-     *
-     * @param ClientRepositoryEloquent $repository
-     * @return \Illuminate\Http\Response
+     * @return Response
+     * @internal param ClientRepositoryEloquent|ClientRepository $repository
      */
-    public function index(ClientRepositoryEloquent $repository)
+    public function index()
     {
-        return $repository->all();
+        return $this->repository->all();
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -36,18 +42,18 @@ class ClientController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
-        return Client::create($request->all());
+        return $this->repository->create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -58,7 +64,7 @@ class ClientController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -70,7 +76,7 @@ class ClientController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -81,7 +87,7 @@ class ClientController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
