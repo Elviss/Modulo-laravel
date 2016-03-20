@@ -86,9 +86,11 @@ class ClientController extends Controller
 
         try {
 
-            $client = $this->repository->find($id)->update($request->all());
+            $this->repository->find($id)->update($request->all());
 
-            return array('response'=>'Cliente alterado');
+            $client = $this->repository->find($id);
+
+            return array('response'=>'Cliente alterado', 'client' => $client);
 
         } catch(Exception $e) {
             return array('error' => $e->getMessage());
