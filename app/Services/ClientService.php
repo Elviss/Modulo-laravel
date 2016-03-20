@@ -11,6 +11,7 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ClientRepository;
 use CodeProject\Validators\ClientValidator;
+use Exception;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ClientService
@@ -50,18 +51,16 @@ class ClientService
 
             return [
                 'error' => true,
-                'message' => $e->getMessage()
+                'message' => $e->getMessageBag()
             ];
 
         }
-        // enviar um email
-        // disparar notificacao
-        // postar um tweet
 
     }
 
     public function update(array $data, $id)
     {
+
         try {
 
             $this->validator->with($data)->passesOrFail();
@@ -72,10 +71,31 @@ class ClientService
 
             return [
                 'error' => true,
-                'message' => $e->getMessage()
+                'message' => $e->getMessageBag()
             ];
 
         }
 
+    }
+
+    public function delete($id)
+    {
+        try {
+
+            $this->repository->delete($id);
+
+            return [
+                'success' => true,
+                'message' => 'Cliente deletado com sucesso'
+            ];
+
+        } catch(Exception $e) {
+
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
+
+        }
     }
 }

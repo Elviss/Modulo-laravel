@@ -5,9 +5,10 @@ namespace CodeProject\Http\Controllers;
 use CodeProject\Entities\Client;
 use CodeProject\Http\Requests\ClientRequest;
 use CodeProject\Repositories\ClientRepository;
+use CodeProject\Services\ClientService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Mockery\CountValidator\Exception;
 
 class ClientController extends Controller
 {
@@ -15,10 +16,19 @@ class ClientController extends Controller
      * @var ClientRepository
      */
     private $repository;
+    /**
+     * @var ClientService
+     */
+    private $service;
 
-    public function __construct(ClientRepository $repository)
+    /**
+     * @param ClientRepository $repository
+     * @param ClientService $service
+     */
+    public function __construct(ClientRepository $repository, ClientService $service)
     {
         $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -49,7 +59,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->repository->create($request->all());
+        return $this->service->create($request->all());
     }
 
     /**
@@ -60,7 +70,7 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        return Client::find($id);
+        return $this->repository->find($id);
     }
 
     /**
@@ -83,22 +93,7 @@ class ClientController extends Controller
      */
     public function update(ClientRequest $request, $id)
     {
-
-        try {
-
-            $this->repository->find($id)->update($request->all());
-
-            $client = $this->repository->find($id);
-
-            return array('response'=>'Cliente alterado', 'client' => $client);
-
-        } catch(Exception $e) {
-            return array('error' => $e->getMessage());
-        }
-
-
-
-
+        return $this->service->update($request->all(), $id);
     }
 
     /**
@@ -109,16 +104,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        try {
-
-            Client::find($id)->delete();
-
-            return array('response'=>'Cliente excluído');
-
-        } catch(Exception $e) {
-            return array('error'=>$e->getMessage());
-        }
-
-
+        return $this->service->delete($id);
     }
 }
