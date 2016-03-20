@@ -107,8 +107,16 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        Client::find($id)->delete();
+        try {
 
-        return array('response'=>'Cliente excluído');
+            Client::find($id)->delete();
+
+            return array('response'=>'Cliente excluído');
+
+        } catch(Exception $e) {
+            return array('error'=>$e->getMessage());
+        }
+
+
     }
 }
