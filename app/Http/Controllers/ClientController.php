@@ -2,9 +2,12 @@
 
 namespace CodeProject\Http\Controllers;
 
+use CodeProject\Entities\Client;
+use CodeProject\Http\Requests\ClientRequest;
 use CodeProject\Repositories\ClientRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Mockery\CountValidator\Exception;
 
 class ClientController extends Controller
 {
@@ -74,13 +77,26 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param ClientRequest|Request $request
+     * @param  int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ClientRequest $request, $id)
     {
-        //
+
+        try {
+
+            $client = $this->repository->find($id)->update($request->all());
+
+            return array('response'=>'Cliente alterado');
+
+        } catch(Exception $e) {
+            return array('error' => $e->getMessage());
+        }
+
+
+
+
     }
 
     /**
@@ -92,5 +108,7 @@ class ClientController extends Controller
     public function destroy($id)
     {
         Client::find($id)->delete();
+
+        return array('response'=>'Cliente excluído');
     }
 }
