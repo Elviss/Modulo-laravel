@@ -1,15 +1,15 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Elvis
- * Date: 20/03/2016
- * Time: 03:28
+ * User: Samsung
+ * Date: 25/03/2016
+ * Time: 23:36
  */
 
 namespace CodeProject\Http\Requests;
 
 
-class ClientRequest extends Request
+class ProjectRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,8 @@ class ClientRequest extends Request
     {
         return [
             'name' => 'required',
-            'email' => 'required'
+            'owner_id' => 'required',
+            'client_id' => 'required'
         ];
     }
 

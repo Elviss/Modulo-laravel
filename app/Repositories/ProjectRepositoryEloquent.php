@@ -1,12 +1,12 @@
 <?php
 
+
 namespace CodeProject\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use CodeProject\Repositories\ProjectRepository;
+
 use CodeProject\Entities\Project;
-use CodeProject\Validators\ProjectValidator;;
+use Prettus\Repository\Eloquent\BaseRepository;
+
 
 /**
  * Class ProjectRepositoryEloquent
@@ -29,8 +29,8 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
     /**
      * Boot up the repository, pushing criteria
      */
-    public function boot()
+    /*public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
-    }
+    }*/
 }

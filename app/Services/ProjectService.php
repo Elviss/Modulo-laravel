@@ -9,9 +9,8 @@
 namespace CodeProject\Services;
 
 
-use CodeProject\Repositories\ClientRepository;
 use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Validators\ClientValidator;
+use CodeProject\Validators\ProjectValidator;
 use Exception;
 use Prettus\Validator\Exceptions\ValidatorException;
 

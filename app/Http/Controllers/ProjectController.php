@@ -2,29 +2,29 @@
 
 namespace CodeProject\Http\Controllers;
 
-use CodeProject\Http\Requests\ClientRequest;
-use CodeProject\Repositories\ClientRepository;
-use CodeProject\Services\ClientService;
+use CodeProject\Http\Requests\ProjectRequest;
+use CodeProject\Repositories\ProjectRepository;
+use CodeProject\Services\ProjectService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ClientController extends Controller
+class ProjectController extends Controller
 {
     /*
-     * @var ClientRepository
+     * @var ProjectRepository
      */
     private $repository;
     /**
-     * @var ClientService
+     * @var ProjectService
      */
     private $service;
 
     /**
-     * @param ClientRepository $repository
-     * @param ClientService $service
+     * @param ProjectRepository $repository
+     * @param ProjectService $service
      */
-    public function __construct(ClientRepository $repository, ClientService $service)
+    public function __construct(ProjectRepository $repository, ProjectService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -33,7 +33,7 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      * @return Response
-     * @internal param ClientRepositoryEloquent|ClientRepository $repository
+     * @internal param ProjectRepositoryEloquent|ProjectRepository $repository
      */
     public function index()
     {
@@ -86,11 +86,11 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ClientRequest|Request $request
+     * @param ProjectRequest|Request $request
      * @param  int $id
      * @return Response
      */
-    public function update(ClientRequest $request, $id)
+    public function update(ProjectRequest $request, $id)
     {
         return $this->service->update($request->all(), $id);
     }
