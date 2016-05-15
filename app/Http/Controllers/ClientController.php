@@ -37,7 +37,13 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return $this->repository->all();
+        try {
+            return $this->repository->all();
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'message' => 'Nenhum cliente foi encontrado'];
+        } catch (Exception $e) {
+            return ['error' => true, 'message' => 'Ocorreu algum erro'];
+        }
     }
 
     /**
@@ -58,7 +64,15 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->service->create($request->all());
+        try {
+            return $this->service->create($request->all());
+        } catch (QueryException $e) {
+            return ['error' => true, 'message' => 'O cliente não pode ser cadastrado'];
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'message' => 'Esse cliente não foi encontrado'];
+        } catch (Exception $e) {
+            return ['error' => true, 'message' => 'Ocorreu algum erro'];
+        }
     }
 
     /**
@@ -69,7 +83,13 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->find($id);
+        try {
+            return $this->repository->find($id);
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'message' => 'Esse cliente não foi encontrado'];
+        } catch (Exception $e) {
+            return ['error' => true, 'message' => 'Ocorreu algum erro'];
+        }
     }
 
     /**
@@ -92,7 +112,15 @@ class ClientController extends Controller
      */
     public function update(ClientRequest $request, $id)
     {
-        return $this->service->update($request->all(), $id);
+        try {
+            return $this->service->update($request->all(), $id);
+        } catch (QueryException $e) {
+            return ['error' => true, 'message' => 'O cliente não pode ser atualizado'];
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'message' => 'Esse cliente não foi encontrado'];
+        } catch (Exception $e) {
+            return ['error' => true, 'message' => 'Ocorreu algum erro'];
+        }
     }
 
     /**
@@ -103,6 +131,14 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        return $this->service->delete($id);
+        try {
+            return $this->service->delete($id);
+        } catch (QueryException $e) {
+            return ['error' => true, 'message' => 'O cliente não pode ser deletado'];
+        } catch (ModelNotFoundException $e) {
+            return ['error' => true, 'message' => 'Esse cliente não foi encontrado'];
+        } catch (Exception $e) {
+            return ['error' => true, 'message' => 'Ocorreu algum erro'];
+        }
     }
 }

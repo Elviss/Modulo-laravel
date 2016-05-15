@@ -4,6 +4,7 @@ namespace CodeProject\Exceptions;
 
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -18,6 +19,7 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         HttpException::class,
         ModelNotFoundException::class,
+        QueryException::class,
     ];
 
     /**
@@ -44,6 +46,9 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
+        }
+        if ($e instanceof QueryException) {
+            $e = new QueryException($e->getMessage(), $e);
         }
 
         return parent::render($request, $e);
