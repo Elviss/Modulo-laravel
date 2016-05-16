@@ -33,3 +33,6 @@ Route::get('project/{id}', 'ProjectController@show');
 Route::put('project/{id}', 'ProjectController@update');
 Route::delete('project/{id}', 'ProjectController@destroy');
 
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
